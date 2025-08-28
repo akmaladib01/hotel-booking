@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { RoomsListComponent } from './rooms-list/rooms-list.component';
 import { RoomCardComponent } from './room-card/room-card.component';
 import { BookRoomModalComponent } from './book-room-modal/book-room-modal.component';
-
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 
