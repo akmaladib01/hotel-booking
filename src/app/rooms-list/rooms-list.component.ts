@@ -56,6 +56,6 @@ export class RoomsListComponent implements OnInit {
 
   // Check if filters are active
   get areFiltersActive(): boolean {
-    return this.searchName !== '' || this.selectedType !== 'all';
+    return this.searchName !== '';
   }
 }
