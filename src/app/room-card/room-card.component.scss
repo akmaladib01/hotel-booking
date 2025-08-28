@@ -1,0 +1,22 @@
+// room-card.component.scss
+.room-details {
+  p.card-text {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+
+    strong {
+      color: #495057;
+      min-width: 60px;
+      display: inline-block;
+    }
+  }
+}
+
+// Optional: Add some color to the status text
+.status-available {
+  color: #28a745; // Green for Available
+}
+
+.status-booked {
+  color: #dc3545; // Red for Booked
+}

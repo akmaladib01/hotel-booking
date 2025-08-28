@@ -1,0 +1,50 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Available Hotel Rooms</h2>
+
+  <!-- Search and Filter Section -->
+  <div class="row mb-4">
+    <div class="col-md-5">
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search by room name..."
+          [(ngModel)]="searchTerm"
+        />
+        <button class="btn btn-primary" type="button" (click)="applyFilters()">
+          <i class="bi bi-search"></i> Search
+        </button>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="input-group">
+        <span class="input-group-text">Filter </span>
+        <select class="form-select" [(ngModel)]="selectedType">
+          <option value="all">All Types</option>
+          <option
+            *ngFor="let type of roomTypes"
+            [value]="type"
+            [disabled]="type === 'all'"
+          >
+            {{ type }}
+          </option>
+        </select>
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          (click)="applyFilters()"
+        >
+          Apply
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rooms Grid -->
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <div class="col" *ngFor="let room of filteredRooms">
+      <app-room-card [room]="room" (booked)="onRoomBooked()"></app-room-card>
+    </div>
+  </div>
+</div>

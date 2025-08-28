@@ -1,0 +1,63 @@
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { RoomService } from '../services/room.service';
+import { Room } from '../models/room.model';
+import Swal from 'sweetalert2';
+
+@Component({
+  selector: 'app-rooms-list',
+  templateUrl: './rooms-list.component.html',
+  styleUrls: ['./rooms-list.component.scss'],
+})
+export class RoomsListComponent implements OnInit {
+  rooms: Room[] = [];
+  filteredRooms: Room[] = [];
+  searchTerm: string = '';
+  selectedType: string = 'all';
+  roomTypes: string[] = ['all'];
+
+  @ViewChild('searchInput') searchInput!: ElementRef;
+
+  constructor(private roomService: RoomService) {}
+
+  ngOnInit(): void {
+    this.loadRooms();
+  }
+
+  loadRooms(): void {
+    this.roomService.getRooms().subscribe({
+      next: (data) => {
+        this.rooms = data;
+        this.filteredRooms = data;
+
+        const types = [...new Set(data.map((room) => room.type))];
+        this.roomTypes = [...types];
+      },
+      error: () => {
+        Swal.fire('Error', 'Failed to load rooms.', 'error');
+      },
+    });
+  }
+
+  onRoomBooked(): void {
+    this.loadRooms();
+    Swal.fire('Success', 'Room booked successfully!', 'success');
+  }
+
+  // Apply filters only when search button is clicked
+  applyFilters(): void {
+    this.filteredRooms = this.rooms.filter((room) => {
+      const matchesSearch =
+        this.searchTerm === '' ||
+        room.name.toLowerCase().includes(this.searchTerm.toLowerCase());
+      const matchesType =
+        this.selectedType === 'all' || room.type === this.selectedType;
+
+      return matchesSearch && matchesType;
+    });
+  }
+
+  // Check if filters are active
+  get areFiltersActive(): boolean {
+    return this.searchTerm !== '' || this.selectedType !== 'all';
+  }
+}

@@ -1,0 +1,27 @@
+<div class="card h-100 shadow-sm">
+  <div class="card-body d-flex flex-column">
+    <h5 class="card-title">Room {{ room.name }}</h5>
+
+    <div class="room-details">
+      <p class="card-text"><strong>Type:</strong> {{ room.type }}</p>
+      <p class="card-text"><strong>Price:</strong> RM {{ room.price }}</p>
+      <p
+        class="card-text"
+        [class.status-available]="room.available === 'Available'"
+        [class.status-booked]="room.available === 'Booked'"
+      >
+        <strong>Status:</strong> {{ room.available }}
+      </p>
+    </div>
+
+    <div class="mt-auto text-end">
+      <button
+        class="btn btn-outline-primary btn-sm"
+        (click)="openBookingModal()"
+        [disabled]="room.available !== 'Available'"
+      >
+        Book
+      </button>
+    </div>
+  </div>
+</div>
