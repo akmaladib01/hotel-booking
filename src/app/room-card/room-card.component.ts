@@ -17,9 +17,6 @@ export class RoomCardComponent {
   openBookingModal(): void {
     const modalRef = this.modalService.open(BookRoomModalComponent);
     modalRef.componentInstance.room = this.room;
-    modalRef.result.then(
-      () => this.booked.emit(),
-      () => {}
-    );
+    modalRef.result.then(() => this.booked.emit());
   }
 }

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RoomService } from '../services/room.service';
 import { Room } from '../models/room.model';
 import Swal from 'sweetalert2';
@@ -13,7 +13,7 @@ export class RoomsListComponent implements OnInit {
   filteredRooms: Room[] = [];
   searchName: string = '';
   selectedType: string = 'all';
-  roomTypes: string[] = ['all'];
+  roomTypes: string[] = [];
 
   constructor(private roomService: RoomService) {}
 
@@ -26,9 +26,7 @@ export class RoomsListComponent implements OnInit {
       next: (data) => {
         this.rooms = data;
         this.filteredRooms = data;
-
-        const types = [...new Set(data.map((room) => room.type))];
-        this.roomTypes = [...types];
+        this.roomTypes = [...new Set(data.map((room) => room.type))];
       },
       error: () => {
         Swal.fire('Error', 'Failed to load rooms.', 'error');
@@ -41,7 +39,6 @@ export class RoomsListComponent implements OnInit {
     Swal.fire('Success', 'Room booked successfully!', 'success');
   }
 
-  // Apply filters only when search button is clicked
   applyFilters(): void {
     this.filteredRooms = this.rooms.filter((room) => {
       const matchesSearch =
@@ -49,13 +46,7 @@ export class RoomsListComponent implements OnInit {
         room.name.toLowerCase().includes(this.searchName.toLowerCase());
       const matchesType =
         this.selectedType === 'all' || room.type === this.selectedType;
-
       return matchesSearch && matchesType;
     });
-  }
-
-  // Check if filters are active
-  get areFiltersActive(): boolean {
-    return this.searchName !== '';
   }
 }

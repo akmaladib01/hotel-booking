@@ -3,7 +3,7 @@
 
   <!-- Search and Filter Section -->
   <div class="row mb-4">
-    <div class="col-md-5">
+    <div class="col-md-6">
       <div class="input-group">
         <input
           type="text"
@@ -17,26 +17,19 @@
       </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-6">
       <div class="input-group">
         <span class="input-group-text">Filter </span>
-        <select class="form-select" [(ngModel)]="selectedType">
+        <select
+          class="form-select"
+          [(ngModel)]="selectedType"
+          (change)="applyFilters()"
+        >
           <option value="all">All Types</option>
-          <option
-            *ngFor="let type of roomTypes"
-            [value]="type"
-            [disabled]="type === 'all'"
-          >
+          <option *ngFor="let type of roomTypes" [value]="type">
             {{ type }}
           </option>
         </select>
-        <button
-          class="btn btn-outline-secondary"
-          type="button"
-          (click)="applyFilters()"
-        >
-          Apply
-        </button>
       </div>
     </div>
   </div>
