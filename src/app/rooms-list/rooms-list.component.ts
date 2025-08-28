@@ -11,11 +11,9 @@ import Swal from 'sweetalert2';
 export class RoomsListComponent implements OnInit {
   rooms: Room[] = [];
   filteredRooms: Room[] = [];
-  searchTerm: string = '';
+  searchName: string = '';
   selectedType: string = 'all';
   roomTypes: string[] = ['all'];
-
-  @ViewChild('searchInput') searchInput!: ElementRef;
 
   constructor(private roomService: RoomService) {}
 
@@ -47,8 +45,8 @@ export class RoomsListComponent implements OnInit {
   applyFilters(): void {
     this.filteredRooms = this.rooms.filter((room) => {
       const matchesSearch =
-        this.searchTerm === '' ||
-        room.name.toLowerCase().includes(this.searchTerm.toLowerCase());
+        this.searchName === '' ||
+        room.name.toLowerCase().includes(this.searchName.toLowerCase());
       const matchesType =
         this.selectedType === 'all' || room.type === this.selectedType;
 
@@ -58,6 +56,6 @@ export class RoomsListComponent implements OnInit {
 
   // Check if filters are active
   get areFiltersActive(): boolean {
-    return this.searchTerm !== '' || this.selectedType !== 'all';
+    return this.searchName !== '' || this.selectedType !== 'all';
   }
 }
